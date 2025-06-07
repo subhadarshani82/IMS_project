@@ -11,6 +11,9 @@ class CustomUser(AbstractUser):
         ('seller', 'Seller'),
     )
     role = models.CharField(max_length=20, choices=USER_ROLES)
+    status = models.CharField(max_length=20, default='Pending')
+    phone = models.CharField(max_length=15, blank=True, null=True)
+    address = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return f"{self.username} ({self.role})"
