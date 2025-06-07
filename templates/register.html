@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head><title>Register</title></head>
+<body>
+  <h2>User Registration</h2>
+  <form id="registerForm" method="POST" action="/register/">
+    {% csrf_token %}
+    Username: <input type="text" name="username" required><br><br>
+    Email: <input type="email" name="email" required><br><br>
+    Password: <input type="password" name="password" required><br><br>
+    Confirm Password: <input type="password" name="confirm_password" required><br><br>
+    Phone: <input type="text" name="phone"><br><br>
+    Address: <textarea name="address"></textarea><br><br>
+    Role:
+    <select name="role" required>
+      <option value="admin">Admin</option>
+      <option value="seller">Seller</option>
+      <option value="distributor">Distributor</option>
+    </select><br><br>
+    <button type="submit">Register</button>
+  </form>
+</body>
+</html>
