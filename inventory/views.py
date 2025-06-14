@@ -51,3 +51,51 @@ def login_user(request):
     return render(request, 'login.html')
 def dashboard(request):
     return render(request,'dashboard.html')
+
+
+
+
+from django.shortcuts import render, redirect
+from .models import Product, Category
+from django.contrib.auth.decorators import login_required
+
+
+def add_product(request):
+    categories = Category.objects.all()
+
+    if request.method == "POST":
+        name = request.POST['name']
+        description = request.POST.get('description', '')
+        price = request.POST['price']
+        quantity = request.POST['quantity']
+        category_id = request.POST['category']
+        image = request.FILES.get('image')
+        
+
+        try:
+            category = Category.objects.get(id=category_id)
+            product = Product.objects.create(
+                name=name,
+                description=description,
+                price=price,
+                quantity=quantity,
+                category=category,
+                image=image,
+                created_by=request.user,
+            )
+            return render(request, 'add_product.html', {
+                'message': 'Product added successfully!',
+                'categories': categories
+            })
+        except Exception as e:
+            return render(request, 'add_product.html', {
+                'error': f"Failed to add product: {e}",
+                'categories': categories
+            })
+
+    return render(request, 'add_product.html', {'categories': categories})
+
+def list_products(request):
+    
+    products = Product.objects.all()
+    return render(request, 'list_products.html', {'products': products})

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add Product</title>
+</head>
+<body>
+  <h2>Add New Product</h2>
+  {% if error %}<p style="color:red;">{{ error }}</p>{% endif %}
+  {% if message %}<p style="color:green;">{{ message }}</p>{% endif %}
+
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    Name: <input type="text" name="name" required><br><br>
+    Description: <textarea name="description"></textarea><br><br>
+    Price: <input type="number" name="price" step="0.01" required><br><br>
+    Quantity: <input type="number" name="quantity" required><br><br>
+
+    Category:
+    <select name="category" required>
+      {% for cat in categories %}
+        <option value="{{ cat.id }}">{{ cat.name }}</option>
+      {% endfor %}
+    </select><br><br>
+
+    Image: <input type="file" name="image"><br><br>
+
+    <button type="submit">Add Product</button>
+  </form>
+</body>
+</html>
